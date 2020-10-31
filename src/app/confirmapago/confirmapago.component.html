@@ -1,0 +1,64 @@
+
+
+<div class="container">
+    <h2 style="text-align: center;">Tú pago ha sido exitoso!</h2>
+    <div  class="card col mx-2 my-3" style="width: 42rem;">
+
+        <div  class="card-body" >
+            <h3 class="card-title" >Número de compra:  {{ordenCompra.pagoid}}</h3>
+
+           
+            <div class="table table-striped">
+                <thead class="thead-danger">
+                    <th scope="col">Foto</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Categoría</th>
+                    <th scope="col">Precio </th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Subtotal</th>
+                                  
+                
+                 
+                 
+                    
+    
+                </thead>
+                <tbody>
+                    <tr *ngFor="let prod of losProducto; index as i ">
+                        <td> <img src={{endPoint}}{{prod.imagen[0].url}} 
+                            alt=""
+                            width="60"
+                            height="40"></td>
+                        <td>{{prod.descripcion}} </td>
+                        <td>{{prod.categoria}} </td>
+                        <td> ₡{{prod.precio}}</td>
+                        <td style="text-align: center;"> {{prod.cant}}</td>  
+                        <td> {{prod.cant * prod.precio }}</td>  
+                       
+
+                      
+                       
+                        
+                    </tr>
+                   
+                 
+    
+    
+                </tbody>
+                
+                <h4 style="text-align: right;">Total pagado:     ₡{{totalString}} </h4>
+                <h5 style="text-align: right;">Total pagado:     ${{totaldolar}} </h5>
+
+                <h5 style="background-color: lightcoral ; height: 30px;">Ubicación: {{ordenCompra.ubicacion}}</h5>
+              
+            </div>
+
+
+        </div>
+       
+
+    </div>
+    
+
+</div>
+

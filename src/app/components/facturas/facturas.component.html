@@ -1,0 +1,187 @@
+<br>
+
+
+
+<div class="container" >
+    <button class="nav-link"  routerLink="carritocompras" >Ver carrito </button>
+   
+</div>
+<router-outlet></router-outlet>
+
+
+
+
+<div class="row">
+
+    <div   class="alert alert-warning" role="alert" *ngFor="let fact of arrFact; index as i " [class.selected]="true">
+
+        <form #f="ngForm" (ngSubmit)="agregarPedido(fact,f)" >
+            <div class="card col mx-2 my-3" style="width: 18rem;" >
+                <img class="card-img-top mx-2 my-2" src={{endPoint}}{{fact.imagen[0].url}}  alt="Card image cap" style="height: 200px;">
+                <div class="card-body">
+                <h5 class="card-title">{{fact.nombre}}</h5>
+                <p class="card-text">{{fact.apellido}} {{fact.direccion}}</p>
+                    
+                <button class="btn btn-primary mx-3" *ngIf="fact.stock > 0" type="submit">Agregar a carrito</button>
+                <button class="btn btn-warning mx-5" *ngIf="fact.stock === 0">Suscribir </button>   
+                 <input *ngIf="fact.stock > 0; else noHay" [class.cantidad]="true" type="number" name="cantidad" class="form-control mx-3 my-1 col-8"
+                    [(ngModel)]="fact.cant" min="1" pattern="^[0-9]+" placeholder="Cantidad">                   
+           
+                  
+                </div>
+            </div>
+
+           <div ></div>
+            
+            <ng-template #noHay>
+                <div [class.agotado]=true>Agotado</div>
+            </ng-template>
+            
+           
+        </form>    
+
+    </div>
+
+
+</div>
+
+
+
+
+<!-- Modal -->
+<ng-template #noHay>
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title mx-5" id="exampleModalLabel">Editando: </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form >
+                    <input 
+                    type="text" placeholder="Editar nombre" 
+                  
+                  
+                    >
+                    <button class="btn btn-primary mt-3" type="submit">Guardar Cambios</button>
+                </form>
+                
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+         
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+</ng-template>
+
+
+<div class="container px-90">  
+    <div class="row">
+        <div class="col-6">
+            <h1 class=""> Facturas Pendientes </h1>
+
+        </div>
+
+    </div>
+    
+        <div class="table table-striped">
+            <thead class="thead-dark">
+                <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Dirección</th>
+                <th scope="col">Monto</th>
+                <th scope="col">Fecha</th>
+               
+                <th scope="col">Imagen</th>
+                <th scope="col">Estado</th>
+                
+
+            </thead>
+            <tbody>
+                <tr *ngFor="let fact of arrFact; index as i ">
+                    <td>{{fact.id}}  </td>
+                    <td>{{fact.nombre}} </td>
+                    <td>{{fact.apellido}} </td>
+                    <td>{{fact.direccion}}</td>
+                    <td>{{fact.monto}}</td>
+                    <td>{{fact.fechaCompra}}</td>
+                    <td> <img src={{endPoint}}{{fact.imagen[0].url}} 
+                        alt=""
+                        width="60"
+                        height="40"></td>
+                    <td><button class="btn btn-primary">Destino</button></td>
+                    <td><button class="btn btn-danger">Pendiente</button></td>
+                </tr>
+
+            </tbody>
+          
+        </div>     
+   
+</div>
+
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-5">
+            <form #f = "ngForm" (ngSubmit) = "getFactura(f)">
+                <input class="" type="text" ngModel name="id" />
+                <button class="btn btn-primary mx-2" type="submit">Buscar</button>
+
+            </form>
+          
+        </div>
+    </div>
+    
+
+</div>
+
+<div class="container">
+    <form #f2="ngForm" (ngSubmit)="agregarFact(f2)" >
+        <input 
+        type="text" placeholder="Nombre" 
+        name="nombre" class="form-control"
+        [(ngModel)]="factAdd.nombre"
+        >  <input 
+        type="text" placeholder="Apellido" 
+        name="apellido" class="form-control"
+        [(ngModel)]="factAdd.apellido"
+        >  <input 
+        type="text" placeholder="Dirección" 
+        name="direccion" class="form-control"
+        [(ngModel)]="factAdd.direccion"
+        >  <input 
+        type="number" placeholder="Monto" 
+        name="monto" class="form-control"
+        [(ngModel)]="factAdd.monto"
+        >
+        <button class="btn btn-primary mt-3" type="submit">Guardar</button>
+    </form>
+</div>
+
+
+
+
+<div class="container">
+    <p *ngIf="show; else notShow">{{fact.cliente}}</p>
+
+    <ng-template #notShow>
+        <p>
+         NO se encontro
+        </p>
+      </ng-template>
+
+
+</div>
+
+

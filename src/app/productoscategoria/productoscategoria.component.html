@@ -1,0 +1,107 @@
+<p>productoscategoria works!</p>
+<p>{{categoria}}</p>
+
+<div class="container"> <button class="btn btn-primary" 
+                                    (click)=verCarrito()
+                                  
+                                    > Ver carrito {{cantidad}} </button> </div>
+                                    <p class="mx-5"  *ngIf="carritoVacio"> Carrito vacío</p>
+<div class="row">
+    
+
+
+    <div   class="alert alert-warning" role="alert" *ngFor="let producto of listaProductos | paginate: {itemsPerPage: 4, currentPage: pageActual}  " [class.selected]="true">
+
+        <form #f="ngForm" (ngSubmit)="agregarPedido(producto,f,content)" >
+            <div class="card col mx-2 my-3" style="width: 18rem;" >
+                <img class="card-img-top mx-2 my-2" src={{endPoint}}{{producto.imagen[0].url}}  alt="Card image cap" style="height: 200px;">
+                <div class="card-body">
+                <h5 class="card-title">{{producto.descripcion}}</h5> <h4>Precio: ₡{{producto.precio}}</h4>
+                <p class="card-text"> Categoria: {{producto.categoria}}</p>
+                <p class="card-text"> Stock: {{producto.stock}}</p>
+                    
+                <button class="btn btn-primary mx-3" *ngIf="producto.stock > 0" type="submit">Agregar a carrito</button>
+                <button class="btn btn-warning mx-5"
+                        *ngIf="producto.stock === 0" 
+                        (click)="openModal(content, producto)"
+                >Suscribir </button>   
+                 <input *ngIf="producto.stock > 0; else noHay" [class.cantidad]="true" type="number" name="cantidad" class="form-control mx-3 my-1 col-8"
+                    [(ngModel)]="producto.cant" min="1" pattern="^[0-9]+" placeholder="Cantidad">                   
+           
+                  
+                </div>
+            </div>
+
+           
+            <ng-template #noHay>
+                <button class="btn btn-warning mx-5">Suscribir </button> 
+                <div [class.agotado]=true>Agotado</div>
+            </ng-template>
+ <!-- Modal -->
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal'title">Se el primero en disfrutar de este producto en cuanto nos llegue</h4>
+        <button class="close" type="button" (click)="modal.dismiss()"></button>
+        <span aris-hidden="true">&times;</span>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <form #formProdcutAgotado="ngForm" (ngSubmit)="infoProducto(formProdcutAgotado, producto)">
+                <div class="form-group" >
+                <label for="email">Correo Electrónico</label>
+                <input type="email" 
+                       class="form-control" 
+                       name="email" 
+                       [(ngModel)]="client.email"
+                       placeholder="Ingresa tu correo electrónico">
+                <small id="emailHelp" class="form-text text-muted">Nunca compartimos tus datos con terceros.</small>
+                </div>
+                <div class="form-group">
+                <label for="comentario">Comentario</label>
+                <input type="text"
+                 class="form-control" 
+                 name="comentario" 
+                 [(ngModel)]="client.comentario"
+                 placeholder="Ingresa un comentario">
+                </div>
+                <div class="form-check">
+                <input type="checkbox"
+                 class="form-check-input" 
+                 name="infoPromo" 
+                 [(ngModel)]="client.infoPromo"
+                 >
+                <label class="form-check-label" for="checkPromo">Mantente informado sobre promociones</label>
+                </div>
+                <div class="form-group">
+                    <input type="hidden" class="form-control" id="productoSuscribir">
+                    
+                    </div>
+                <button type="submit" class="btn btn-primary my-2">  Enviar  </button>
+            </form>
+     </div>
+
+    </div>
+   
+ 
+    <div class="modal-footer">
+        
+        <button class="btn btn-danger" type="button" (click)="modal.dismiss()">Cancelar</button>
+    </div>
+
+</ng-template>
+                  
+        </form>    
+
+    </div>
+
+
+</div>
+
+<div class="container" >
+ <pagination-controls (pageChange)="pageActual=$event"
+                        previousLabel="Anterior"
+                        nextLabel="Siguiente" ></pagination-controls>
+</div>
+ 
+<router-outlet></router-outlet>
