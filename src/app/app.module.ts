@@ -16,6 +16,13 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ProductoscategoriaComponent } from './productoscategoria/productoscategoria.component';
 import { PagoComponent } from './pago/pago.component';
 import { ConfirmapagoComponent } from './confirmapago/confirmapago.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSliderModule } from '@angular/material/slider';
+import { RastreoComponent } from './rastreo/rastreo.component';
+import { ListacomprasComponent } from './listacompras/listacompras.component';
+import { CaruselComponent } from './carusel/carusel.component';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -28,7 +35,10 @@ import { ConfirmapagoComponent } from './confirmapago/confirmapago.component';
     ModalComponent,
     ProductoscategoriaComponent,
     PagoComponent,
-    ConfirmapagoComponent
+    ConfirmapagoComponent,
+    RastreoComponent,
+    ListacomprasComponent,
+    CaruselComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +47,12 @@ import { ConfirmapagoComponent } from './confirmapago/confirmapago.component';
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    BrowserAnimationsModule,
+    MatSliderModule,
+    SlickCarouselModule,
+    NgxSpinnerModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

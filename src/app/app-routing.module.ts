@@ -8,6 +8,8 @@ import { HeaderComponent } from './header/header.component';
 import { ProductoscategoriaComponent } from './productoscategoria/productoscategoria.component';
 import { PagoComponent } from './pago/pago.component';
 import { ConfirmapagoComponent } from './confirmapago/confirmapago.component';
+import { RastreoComponent } from './rastreo/rastreo.component';
+import { CaruselComponent } from './carusel/carusel.component';
 
 
 const routes: Routes = [
@@ -21,6 +23,9 @@ const routes: Routes = [
   {path: 'productoscategoria/:cat', component: ProductoscategoriaComponent},
   {path: 'pago', component: PagoComponent},
   {path: 'confirmapago/:orden', component: ConfirmapagoComponent},
+  {path: 'rastreo', component: RastreoComponent},
+  {path: 'rarusel', component: CaruselComponent},
+
 
 
 ];

@@ -1,0 +1,97 @@
+<div class="container">
+    <form #formulario="ngForm" (ngSubmit)="rastrearCompra(formulario)" >
+        <div class="row">
+            <div class="col-4">
+                 <div class="input-group mb-3 my-3">
+                     <input type="text" name="id" [(ngModel)]=laOrden.id class="form-control" placeholder="Ingrese el número de compra" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                 <div class="input-group-append">
+                  <button class="btn btn-outline-primary" type="button" (click)="rastrearCompra(formulario)">Buscar</button>
+                </div>
+            </div>
+            </div>
+          </div>
+      
+       
+    
+
+       
+
+    </form>
+</div>
+
+
+
+<div class="container" *ngIf="encontrado">
+    <div  class="card col mx-2 my-3" style="width: 54rem;">
+        <h1 style="text-align: center;">Ratreo de compras</h1>
+
+        <h1  *ngIf="enbodega; else elseBlock" style="background-color:lightcoral; height: 30px;">Ubicación: {{ordenCompra.ubicacion}}</h1>
+
+    </div>
+    <ng-template #elseBlock>
+        
+        <h1 style="background-color:lightgreen; height: 28px;">Ubicación: {{ordenCompra.ubicacion}}</h1>
+    </ng-template>
+   
+    <div  class="card col mx-2 my-3" style="width: 54rem;">
+
+        <div  class="card-body" >
+            <h3 class="card-title" >Número de compra:  {{ordenCompra.pagoid}}</h3>
+
+           
+            <div class="table table-striped">
+                <thead class="thead-danger">
+                    <th scope="col">Foto</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Categoría</th>
+                    <th scope="col">Precio </th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Subtotal</th>
+                                  
+                
+                 
+                 
+                    
+    
+                </thead>
+                <tbody>
+                    <tr *ngFor="let prod of losProducto; index as i ">
+                        <td> <img src={{endPoint}}{{prod.imagen[0].url}} 
+                            alt=""
+                            width="120"
+                            height="90"></td>
+                        <td>{{prod.descripcion}} </td>
+                        <td>{{prod.categoria}} </td>
+                        <td> ₡{{prod.precio}}</td>
+                        <td style="text-align: center;"> {{prod.cant}}</td>  
+                        <td> {{prod.cant * prod.precio }}</td>  
+                       
+
+                      
+                       
+                        
+                    </tr>
+                   
+                 
+    
+    
+                </tbody>
+                
+                
+
+                
+              
+            </div>
+
+
+        </div>
+       
+
+    </div>
+    
+
+</div>
+
+
+
+

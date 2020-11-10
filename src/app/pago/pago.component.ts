@@ -5,6 +5,7 @@ import { Producto } from '../models/producto';
 import { OrdenCompra } from '../models/orden';
 import { StrapiService } from '../services/strapi.service';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 declare var paypal;
 
@@ -22,15 +23,19 @@ export class PagoComponent implements OnInit {
   descripcionCompra: string;
   ordenCompra: OrdenCompra;
   ordenResp: OrdenCompra;
+  espera: boolean;
 
 
   constructor(private strapi: StrapiService,
-              private router: Router) {
+              private router: Router,
+              private spinner: NgxSpinnerService,
+              ) {
 
     this.tipocambio = 601;
     this.descripcionCompra = '';
     this.ordenCompra = new OrdenCompra();
     this.ordenCompra = new OrdenCompra();
+    this.espera = false;
 
   }
 
@@ -75,7 +80,17 @@ export class PagoComponent implements OnInit {
         });
       },
       onApprove: async (data, actions) => {
+        this.espera = true;
+        this.spinner.show();
+      
         const order = await actions.order.capture();
+           /** spinner starts on init */
+       
+
+        setTimeout(() => {
+         /** spinner ends after 5 seconds */
+         this.spinner.hide();
+       }, 5000);
         if (order.status === 'COMPLETED') {
           console.log(order.id);
           this.ordenCompra.pagoid = order.id;
@@ -84,7 +99,7 @@ export class PagoComponent implements OnInit {
           if ((await cond).isConfirmed) {
             console.log(order);
             this.generarOrden(this.ordenCompra);
-            
+
           }
 
         }else{

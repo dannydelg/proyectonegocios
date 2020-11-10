@@ -8,6 +8,7 @@ import { Cliente } from '../models/cliente';
 import Swal from 'sweetalert2';
 
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -29,7 +30,7 @@ export class HomeComponent implements OnInit {
   pedidoCarrito: Array<Producto> = [];
   prodSuscribir: Producto;
   client: Cliente;
-  cantidad = 0;
+  cantidad: number;
   pageActual = 1;
   categoria: string;
   constructor(private strapi: StrapiService,
@@ -43,7 +44,8 @@ export class HomeComponent implements OnInit {
     this.factAdd = new Producto();
     this.endPoint = 'http://localhost:1337';
     this.client = new Cliente();
-    this.prodSuscribir = new Producto;
+    this.prodSuscribir = new Producto();
+    
 
 
    }
@@ -52,15 +54,20 @@ export class HomeComponent implements OnInit {
 
   async ngOnInit() {
 
-    console.log(this.categoria);
+    
 
-    this.activateRoute.paramMap.subscribe((params: ParamMap) => {
+       console.log(this.categoria);
+
+       this.activateRoute.paramMap.subscribe((params: ParamMap) => {
       this.categoria = params.get('cat');
       this.cargarProductos();
+      const cantstring  = JSON.parse(localStorage.getItem('cantidadCarrito'));
+      this.cantidad = cantstring;
+
 
     });
 
-    
+
 
 
   }
@@ -69,7 +76,7 @@ export class HomeComponent implements OnInit {
     if (this.categoria === undefined || this.categoria === null) {
       await this.strapi.getProductos().subscribe(element => {
         this.listaProductos = element;
-        //console.log(this.listaProductos[0].imagen.url);
+
         this.listaProductos.forEach(e => { console.log(e.descripcion); } );
 
         console.log(this.listaProductos);
@@ -79,7 +86,7 @@ export class HomeComponent implements OnInit {
 
       await this.strapi.getProductosByCategory(this.categoria).subscribe(element => {
         this.listaProductos = element;
-        //console.log(this.listaProductos[0].imagen.url);
+
         this.listaProductos.forEach(e => { console.log(e.descripcion); } );
 
         console.log(this.listaProductos);
@@ -98,16 +105,17 @@ export class HomeComponent implements OnInit {
 
   agregarPedido(elProduct: Producto, form: NgForm, content: any){
 
-
+    
     elProduct.cant = form.value.cantidad;
     console.log(elProduct);
     console.log(elProduct.cant);
-    this.cantidad = this.cantidad + elProduct.cant;
-    
+    this.cantidad =  this.cantidad + elProduct.cant;
     this.losPedido.push(elProduct);
+    
     if (elProduct.cant <= elProduct.stock ) {
+      localStorage.setItem('cantidadCarrito', this.cantidad.toString() );
       console.log('Se puede vender');
-      
+
       this.descontarStockTemporal(elProduct);
       this.show = true;
       let unique = this.losPedido.filter( (e, index, array) => {
@@ -123,7 +131,7 @@ export class HomeComponent implements OnInit {
         console.log(unique);
       }
       this.pedidoCarrito = unique;
-      
+
 
     } else {
       this.show = false;
@@ -136,11 +144,11 @@ export class HomeComponent implements OnInit {
   verCarrito(): void {
 
     if (localStorage.getItem('lista')) {
-      let listaParcial: Array<Producto>  = JSON.parse(localStorage.getItem('lista'));
+      const listaParcial: Array<Producto>  = JSON.parse(localStorage.getItem('lista'));
       listaParcial.forEach(e => {
          this.pedidoCarrito.forEach(ped => {
            if (e.id === ped.id){
-            
+
               e.cant = e.cant + ped.cant;
               let i = this.pedidoCarrito.indexOf(ped);
               this.pedidoCarrito.splice(i, 1);
@@ -148,22 +156,13 @@ export class HomeComponent implements OnInit {
         });
          this.pedidoCarrito.push(e);
        });
-      
     }
-   
+
     localStorage.setItem('lista' , JSON.stringify(this.pedidoCarrito));
     this.cantidad = localStorage.length;
-    //localStorage.clear();
-    //this.router.navigate(['/carritocompras', JSON.stringify(this.pedidoCarrito) ]);
+
     this.router.navigate(['/carritocompras']);
-/*     if (this.pedidoCarrito.length > 0) {
-      this.carritoVacio = false;
-      console.log(this.pedidoCarrito);
-     
-    }else{
-      this.carritoVacio = true;
-    }
- */
+
 
   }
 
@@ -173,7 +172,7 @@ export class HomeComponent implements OnInit {
     this.NgModal.open(content, {size: 'xl', backdrop: 'static' });
   }
   infoProducto(form: NgForm, prod: Producto){
-    
+
     this.client = form.value;
     const fecha = new Date();
     this.client.fecha = fecha;

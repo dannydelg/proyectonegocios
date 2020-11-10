@@ -35,7 +35,7 @@ totaldolar: string;
 
       this.totalString = this.total.toFixed(2);
       this.totaldolar = this.ordenCompra.totalpagodolar.toFixed(2);
-     
+      localStorage.setItem('cantidadCarrito', '0');
 
     });
 

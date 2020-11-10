@@ -5,6 +5,7 @@ import { Factura } from '../models/factura';
 import { StrapiService } from '../services/strapi.service';
 
 
+
 @Component({
   selector: 'app-carrito',
   templateUrl: './carrito.component.html',
@@ -35,11 +36,12 @@ export class CarritoComponent implements OnInit {
 
      });
     console.log(this.total);
+    this.totaldolar = (this.total / this.tipocambio).toFixed(2);
 
    }
 
   ngOnInit(): void {
-    this.totaldolar = (this.total / this.tipocambio).toFixed(2);
+    
 
   }
 
@@ -54,12 +56,19 @@ export class CarritoComponent implements OnInit {
 
     this.pedido.forEach(e => {
       if (e.id === prodEliminar.id) {
+        let cantidadAnterior = localStorage.getItem('cantidadCarrito');
+        let cant = Number(cantidadAnterior);
+        cant = cant - prodEliminar.cant;
+        localStorage.setItem('cantidadCarrito', cant.toString() );
        this.total = this.total - (prodEliminar.cant * prodEliminar.precio);
        let i = this.pedido.indexOf(prodEliminar);
        this.pedido.splice(i, 1 );
       }
     });
     localStorage.setItem('lista', JSON.stringify(this.pedido));
+  
+    this.totaldolar = (this.total / this.tipocambio).toFixed(2);
+
     this.devolverStock(prodEliminar);
   }
 

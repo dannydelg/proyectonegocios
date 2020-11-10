@@ -84,6 +84,27 @@ export class StrapiService {
     return this.httpClient.get<Producto[]>(this.endPoint + 'productos/categoria/' + categoria);
   }
 
+  getCompraById(categoria): Promise<Producto[]> {
+    return this.httpClient.get<Producto[]>(this.endPoint + 'productos/categoria/' + categoria).toPromise()
+    .then( resp => resp)
+    .catch((err: any) => err );
+  }
+
+  async getCompraByOrdenId(id: string): Promise<OrdenCompra>{
+
+    return await axios.get(this.endPoint + 'ordecompras/' + id)
+      .then((response) => {
+        return response.data as Promise<OrdenCompra>;
+      });
+  }
+
+  async getCompraByPagoId(idPago: string): Promise<OrdenCompra>{
+
+    return await axios.get(this.endPoint + 'ordecompras/orden/' + idPago)
+      .then((response) => {
+        return response.data as Promise <OrdenCompra>;
+      });
+  }
 
 
 

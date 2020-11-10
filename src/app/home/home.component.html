@@ -2,16 +2,18 @@
 
 
 
-<div class="container"> <button class="btn btn-primary" 
+<div class="container my-2"> <button class="btn btn-primary" 
                                     (click)=verCarrito()
                                   
-                                    > Ver carrito {{cantidad}} </button> </div>
+                                    > <sup *ngIf="cantidad>0">{{cantidad}}</sup> <span class="material-icons">
+                                        shopping_cart
+                                        </span>  </button> </div>
                                     <p class="mx-5"  *ngIf="carritoVacio"> Carrito vacío</p>
 <div class="row">
     
+    
 
-
-    <div   class="alert alert-warning" role="alert" *ngFor="let producto of listaProductos | paginate: {itemsPerPage: 4, currentPage: pageActual}  " [class.selected]="true">
+    <div   class="alert alert-warning" role="alert" *ngFor="let producto of listaProductos | paginate: {itemsPerPage: 6, currentPage: pageActual}  " [class.selected]="true">
 
         <form #f="ngForm" (ngSubmit)="agregarPedido(producto,f,content)" >
             <div class="card col mx-2 my-3" style="width: 18rem;" >

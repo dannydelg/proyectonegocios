@@ -14,7 +14,7 @@
               <a class="nav-link"  routerLink="home">Productos </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link"  >Servicios</a>
+              <a class="nav-link"  [routerLink]="['/rastreo/']" >Rastrear Compra</a>
             </li>
          
             <li >
@@ -23,12 +23,11 @@
                   <div ngbDropdown class="d-inline-block"  >
                     <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Categorias</button>
                     <div ngbDropdownMenu aria-labelledby="dropdownBasic1"   >
-                      <button *ngFor="let categoria of lasCategoriasDif" ngbDropdownItem [routerLink]="['/home/',categoria]" >{{categoria}}</button>
+                      <button *ngFor="let categoria of lasCategoriasDif" ngbDropdownItem [routerLink]="['/home/', categoria]" >{{categoria}}</button>
                     <!--  <button *ngFor="let categoria of lasCategoriasDif" ngbDropdownItem (click)="buscarPorCategoria(categoria, $event)">{{categoria}}</button> --> 
                     </div>
                   </div>
-                </div>
-              
+                </div>        
           
               </div>
               
@@ -41,6 +40,6 @@
 
 </div>
 
-
+<app-carusel></app-carusel>
 
 <router-outlet></router-outlet>
