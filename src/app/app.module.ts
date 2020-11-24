@@ -23,6 +23,8 @@ import { ListacomprasComponent } from './listacompras/listacompras.component';
 import { CaruselComponent } from './carusel/carusel.component';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ConfirmapagoComponent,
     RastreoComponent,
     ListacomprasComponent,
-    CaruselComponent
+    CaruselComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

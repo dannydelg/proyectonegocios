@@ -10,6 +10,9 @@ import { PagoComponent } from './pago/pago.component';
 import { ConfirmapagoComponent } from './confirmapago/confirmapago.component';
 import { RastreoComponent } from './rastreo/rastreo.component';
 import { CaruselComponent } from './carusel/carusel.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { AuthGuard } from './guards/auth.guard';
 
 
 const routes: Routes = [
@@ -19,12 +22,15 @@ const routes: Routes = [
   {path: 'home/:cat', component: HomeComponent},
   {path: 'lista', component: FacturasComponent},
   //{path: 'carritocompras/:carrito', component: CarritoComponent},
-  {path: 'carritocompras', component: CarritoComponent},
+  {path: 'carritocompras', component: CarritoComponent, canActivate: [AuthGuard] },
   {path: 'productoscategoria/:cat', component: ProductoscategoriaComponent},
-  {path: 'pago', component: PagoComponent},
-  {path: 'confirmapago/:orden', component: ConfirmapagoComponent},
-  {path: 'rastreo', component: RastreoComponent},
+  {path: 'pago', component: PagoComponent,  canActivate: [AuthGuard]},
+  {path: 'confirmapago/:orden', component: ConfirmapagoComponent, canActivate: [AuthGuard]},
+  {path: 'rastreo', component: RastreoComponent, canActivate: [AuthGuard]},
   {path: 'rarusel', component: CaruselComponent},
+  {path: 'user/login',  component: LoginComponent },
+  {path: 'user/register',  component: RegisterComponent },
+  
 
 
 

@@ -15,7 +15,8 @@ export class CaruselComponent implements OnInit {
   images: any;
 
   constructor(private strapi: StrapiService) {
-    this.endPoint = 'http://localhost:1337';
+    this.endPoint = 'http://3.15.17.50:1337';
+    //this.endPoint = 'http://localhost:1337';
   }
 
   ngOnInit(): void {

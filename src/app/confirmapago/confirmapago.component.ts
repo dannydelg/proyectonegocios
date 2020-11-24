@@ -16,7 +16,8 @@ total: number;
 totalString: string;
 totaldolar: string;
   constructor(private activateRoute: ActivatedRoute) {
-    this.endPoint = 'http://localhost:1337';
+    this.endPoint = 'http://3.15.17.50:1337';
+    //this.endPoint = 'http://localhost:1337';
     this.total = 0;
 
    }
